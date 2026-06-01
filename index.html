@@ -83,6 +83,9 @@ body{font-family:'Pretendard',sans-serif;background:var(--paper);color:var(--ink
 .rowf.edge .k{color:var(--teal-d)}
 .rowf.edge .v{background:var(--teal-l);padding:10px 14px;border-radius:8px;border-left:3px solid var(--teal);font-size:13.5px}
 .rowf.edge .v b{color:var(--teal-d)}
+.rowf.hecto .k{color:#1d4ed8}
+.rowf.hecto .v{background:#eaf0fb;padding:10px 14px;border-radius:8px;border-left:3px solid #1d4ed8;font-size:13.5px}
+.rowf.hecto .v b{color:#1d4ed8}
 
 /* synergy map */
 .synmap{background:var(--ink);color:#fff;padding:60px 0}
@@ -194,9 +197,9 @@ footer{background:var(--ink);color:#7e8d9c;padding:38px 0;font-size:12px;text-al
 <div class="hero"><div class="wrap">
  <div class="kicker">Smart Money Engine · Wallet One-App</div>
  <h1 class="serif">스마트 머니 엔진<br><em>넣어두면 알아서 굴러갑니다</em></h1>
- <p class="sub">월렛에 들어온 돈을 가만히 두지 않는다. 혼자·함께·벌어서·투자해서 — 어떻게 넣든 하나의 엔진이 알아서 굴린다. 14개 콘텐츠를 "유저가 진짜 쓸까"를 기준으로 4가지 방법으로 묶었다.</p>
+ <p class="sub">월렛에 들어온 돈을 가만히 두지 않는다. 혼자·함께·벌어서·투자해서 — 어떻게 넣든 하나의 엔진이 알아서 굴린다. 13개 콘텐츠를 "유저가 진짜 쓸까"를 기준으로 4가지 방법으로 묶었다.</p>
  <div class="meta">
-  <span>콘텐츠 · <b>14개</b></span><span>굴리는 방법 · <b>4가지</b></span>
+  <span>콘텐츠 · <b>13개</b></span><span>굴리는 방법 · <b>4가지</b></span>
   <span>기준 · <b>유저가 왜 씀 &gt; 법적리스크</b></span><span>비전 · <b>금융 게임체인저</b></span>
  </div>
 </div></div>
@@ -215,7 +218,7 @@ footer{background:var(--ink);color:#7e8d9c;padding:38px 0;font-size:12px;text-al
 <!-- synergy -->
 <div class="synmap"><div class="wrap">
  <div class="cl-head"><span class="cl-num" style="color:var(--teal)">SYNERGY</span><h2 class="cl-title serif">하나의 엔진으로 묶였을 때</h2></div>
- <p class="cl-lead">14개 콘텐츠는 흩어진 기능이 아니라, <b style="color:#7fd9c5">스마트 머니 엔진</b> 하나로 수렴한다. <b style="color:#7fd9c5">혼자(①)·함께(②)·벌어서(③)·투자해서(④)</b> 어떤 방법으로 들어온 돈이든 같은 엔진이 굴리고, 모든 콘텐츠가 그 엔진의 물을 끌어 쓰고 다시 채운다.</p>
+ <p class="cl-lead">13개 콘텐츠는 흩어진 기능이 아니라, <b style="color:#7fd9c5">스마트 머니 엔진</b> 하나로 수렴한다. <b style="color:#7fd9c5">혼자(①)·함께(②)·벌어서(③)·투자해서(④)</b> 어떤 방법으로 들어온 돈이든 같은 엔진이 굴리고, 모든 콘텐츠가 그 엔진의 물을 끌어 쓰고 다시 채운다.</p>
  <div class="flow">
   <div class="lab">SMART MONEY ENGINE · 네 갈래의 돈이 한 엔진으로</div>
   <div class="flowline">
@@ -602,7 +605,7 @@ data:{
  sc:"컨트랙트: 데이터 판매·수익분배 투명 자동 (누가 샀는지 추적)"
 },
 social:{
- title:"함께 모으는 돈",
+ title:"함께 모으고 함께 투자",
  covers:"#4~7 통합",
  desc:"공동 적금·투자 클럽(#4)을 중심으로 디지털 계(#5)·카피트레이딩(#6)·커뮤니티 금고(#7)가 공동금고+멀티시그+고이자 운용을 공유. 모인 돈은 ①의 엔진이 그대로 굴림.",
  steps:[
@@ -615,9 +618,24 @@ social:{
 },
 };
 
+// 각 아이디어별 헥토 그룹 인프라 활용 (구ID 기준)
+// 근거: 헥토파이낸셜 = Circle CPN 국내 유일 결제파트너 + Arc 테스트넷 참여(지갑=헥토이노베이션),
+//       데이터스토어(데이브) 운영, 간편현금결제·가상계좌·휴대폰결제·PG 원천사, 휴대폰 본인인증,
+//       The Hecto 앱의 뚜벅포인트(걸음)·뚜벅투게더(위치인증) PoC
+const HECTO = {
+1:"<b>핵심 시너지.</b> 헥토파이낸셜이 <b>Circle CPN(USDC·EURC 크로스보더 정산)의 국내 유일 결제 파트너</b>이고, 헥토이노베이션이 Circle 스테이블코인 메인넷 <b>Arc 테스트넷에 지갑 분야로 참여 중</b>. 스마트 세이빙의 원화↔USDC 환산·예치·정산 전 과정을 그룹 인프라로 직접 처리 가능 — 외부 의존 없이 가장 큰 무기.",
+5:"결제 잔돈을 굴리는 구조라 <b>헥토파이낸셜 PG·간편현금결제(내통장결제)</b>와 직결. 결제 트리거에서 반올림 차액을 떼어 #1 엔진에 적립하는 흐름을 그룹 결제망 위에 얹을 수 있음.",
+8:"캐시백 적립·재투자 흐름에 <b>헥토파이낸셜 PG·간편현금결제</b> 활용. 카드·페이 결제에서 발생한 캐시백을 그룹 결제망에서 받아 #1 엔진에 자동 적립하는 구조로 연결.",
+21:"K-콘텐츠 팬 결제·정산에 <b>PG·간편결제·휴대폰 소액결제</b> 활용. 글로벌 K팬 대상은 헥토파이낸셜의 <b>해외 결제대금 원스톱 차액 정산(크로스보더)</b> 인프라와 결합 가능.",
+23:"<b>이미 보유한 사업.</b> 데이터 스토어(데이브)가 데이터 판매·리워드 마켓을 운영 중 → 신규 구축 없이 결합.",
+25:"<b>사내 PoC 존재.</b> 뚜벅투게더(위치 인증)·뚜벅포인트 운영 노하우 + 휴대폰 본인인증으로 가입 마찰 최소화.",
+27:"곗돈 납입·순번 지급 정산에 <b>가상계좌·간편현금결제 원천 기술</b> 직접 활용. 휴대폰 본인인증으로 멤버 검증.",
+};
+
 const ALL = [...IDEAS, ...IDEAS2, ...IDEAS3];
 const WFALL = {...WF, ...WF2};
 const RVALL = {...RIVAL, ...RIVAL2};
+const HCALL = HECTO;
 
 function renderFlow(key){
  const f = FLOWS[key]; if(!f) return '';
@@ -742,6 +760,7 @@ CLUSTERS.forEach((cl,ci)=>{
     <div class="rowf"><div class="k">시장 규모</div><div class="v">${it.market}</div></div>
     <div class="rowf riv"><div class="k">이미 하는 곳</div><div class="v">${(RVALL[it.id]?RVALL[it.id].rivals:'조사 중')}</div></div>
     <div class="rowf edge"><div class="k">우리의 강점</div><div class="v">${(RVALL[it.id]?remap(RVALL[it.id].edge):'')}</div></div>
+    ${HCALL[it.id]?`<div class="rowf hecto"><div class="k">헥토 인프라</div><div class="v">${remap(HCALL[it.id])}</div></div>`:''}
     <div class="rowf legal"><div class="k kk-legal">법적 방향</div><div class="v">${it.legal}</div></div>
     <div class="wfwrap"><div class="phone"><div class="screen"><div class="notch"></div><div class="stbar"><span>9:41</span><span>▮▮▮ ●</span></div><div class="scrb">${(WFALL[it.id]||'')}</div></div></div></div>
     <div class="wfcap">▲ 예시 와이어프레임 (실제 화면 아님)</div>
