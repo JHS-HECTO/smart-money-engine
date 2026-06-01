@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스마트 머니 엔진 · 월렛 콘텐츠 기획</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --ink:#0d1b2a;--ink2:#16293d;--paper:#f7f5f0;--paper2:#fffefb;
+ --teal:#0bab94;--teal-d:#077a68;--teal-l:#e2f5f1;
+ --coral:#f1572b;--coral-l:#fce6df;--amber:#e0930f;--amber-l:#fbeed6;
+ --line:#d8d3c8;--muted:#6b6a63;--muted2:#94928a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Pretendard',sans-serif;background:var(--paper);color:var(--ink);line-height:1.7;-webkit-font-smoothing:antialiased}
+.serif{font-family:'Newsreader',serif}.mono{font-family:'Space Mono',monospace}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px}
+
+/* hero */
+.hero{background:var(--ink);color:#fff;padding:78px 0 58px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 82% 12%,rgba(11,171,148,.22),transparent 44%),radial-gradient(circle at 10% 90%,rgba(241,87,43,.13),transparent 42%)}
+.hero .wrap{position:relative}
+.kicker{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:20px}
+.hero h1{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(36px,5.5vw,62px);line-height:1.06;letter-spacing:-.02em;margin-bottom:22px}
+.hero h1 em{font-style:italic;color:var(--teal)}
+.hero .sub{font-size:17px;color:#c9d2dc;max-width:640px}
+.hero .meta{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px 30px;font-size:13px;color:#8fa0b1}
+.hero .meta b{color:#fff;font-weight:500}
+
+/* intro principle */
+.principle{background:var(--paper2);border:1px solid var(--line);border-radius:18px;padding:34px 38px;margin-top:-40px;position:relative;z-index:5;box-shadow:0 24px 60px -30px rgba(13,27,42,.35)}
+.principle h2{font-family:'Newsreader',serif;font-weight:500;font-size:22px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.principle h2::before{content:"";width:28px;height:3px;background:var(--coral)}
+.principle p{font-size:15px;color:var(--muted)}
+.principle .q{font-family:'Newsreader',serif;font-style:italic;font-size:20px;color:var(--ink);margin:14px 0;padding-left:16px;border-left:3px solid var(--teal)}
+
+/* cluster nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(247,245,240,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 0;margin-top:40px}
+.nav .wrap{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nav a{font-size:12.5px;color:var(--muted);text-decoration:none;padding:5px 12px;border:1px solid var(--line);border-radius:20px;transition:all .15s;white-space:nowrap}
+.nav a:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* cluster */
+.cluster{padding:54px 0 20px}
+.cl-head{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+.cl-num{font-family:'Space Mono',monospace;font-size:14px;color:var(--teal-d);font-weight:700}
+.cl-title{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(26px,3.6vw,36px);letter-spacing:-.01em}
+.cl-lead{font-size:15.5px;color:var(--muted);max-width:720px;margin-bottom:8px}
+.cl-merge{font-size:13px;color:var(--coral);background:var(--coral-l);display:inline-block;padding:4px 12px;border-radius:8px;margin-bottom:18px}
+
+/* idea card */
+.idea{background:var(--paper2);border:1px solid var(--line);border-radius:16px;margin-bottom:18px;overflow:hidden;transition:box-shadow .2s}
+.idea:hover{box-shadow:0 16px 44px -28px rgba(13,27,42,.4)}
+.idea-head{display:flex;align-items:center;gap:14px;padding:20px 24px;cursor:pointer;user-select:none}
+.idea-head:hover{background:#f1efe8}
+.idea-id{font-family:'Space Mono',monospace;font-weight:700;font-size:13px;color:#fff;background:var(--ink);min-width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.idea-tt{flex:1}
+.idea-tt h3{font-size:17.5px;font-weight:700;line-height:1.3}
+.idea-tt .ol{font-size:13.5px;color:var(--teal-d);margin-top:2px}
+.idea-sc{font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);background:var(--teal-l);padding:5px 10px;border-radius:7px;flex-shrink:0}
+.idea-tog{font-size:18px;color:var(--muted2);transition:transform .2s;flex-shrink:0;width:20px;text-align:center}
+.idea.open .idea-tog{transform:rotate(45deg)}
+.idea-body{display:none;padding:4px 24px 24px;border-top:1px solid var(--line)}
+.idea.open .idea-body{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+.rowf{display:grid;grid-template-columns:122px 1fr;gap:0;border-bottom:1px solid #ece9e1;padding:13px 0}
+.rowf:last-child{border-bottom:none}
+.rowf .k{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.5px;color:var(--teal-d);text-transform:uppercase;padding-top:2px}
+.rowf .v{font-size:14px;color:var(--ink2)}
+.rowf .v b{color:var(--ink)}
+.hooks{display:flex;flex-direction:column;gap:7px}
+.hooks .h{font-family:'Newsreader',serif;font-style:italic;font-size:15.5px;color:var(--ink);padding-left:14px;border-left:2px solid var(--coral)}
+.kk-legal{color:var(--amber)}
+.rowf.legal .v{background:var(--amber-l);padding:10px 14px;border-radius:8px;font-size:13px}
+.rowf.sc .v{background:#eaf6f3;padding:10px 14px;border-radius:8px}
+.rowf.syn .v{background:#f0edf6;padding:10px 14px;border-radius:8px}
+.rowf.riv .v{background:#f3f1ea;padding:10px 14px;border-radius:8px;font-size:13px;color:var(--muted)}
+.rowf.riv .v b{color:var(--ink2)}
+.rowf.edge .k{color:var(--teal-d)}
+.rowf.edge .v{background:var(--teal-l);padding:10px 14px;border-radius:8px;border-left:3px solid var(--teal);font-size:13.5px}
+.rowf.edge .v b{color:var(--teal-d)}
+
+/* synergy map */
+.synmap{background:var(--ink);color:#fff;padding:60px 0}
+.synmap .cl-title{color:#fff}
+.synmap .cl-lead{color:#a9b6c2}
+.smap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:24px}
+.smap-card{background:var(--ink2);border:1px solid #2a3e52;border-radius:14px;padding:22px}
+.smap-card .n{font-family:'Space Mono',monospace;font-size:11px;color:var(--teal)}
+.smap-card h4{font-size:16px;font-weight:600;margin:6px 0 8px}
+.smap-card p{font-size:13px;color:#aebccb;line-height:1.6}
+.flow{background:var(--ink2);border:1px solid #2a3e52;border-radius:14px;padding:24px 26px;margin-top:24px}
+.flow .lab{font-family:'Space Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:1px;margin-bottom:14px}
+.flowline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13.5px}
+.flowline .node{background:rgba(11,171,148,.14);color:#7fd9c5;padding:7px 13px;border-radius:9px;border:1px solid #2f6f63}
+.flowline .ar{color:var(--muted2)}
+
+/* recap table */
+.recap{padding:56px 0}
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--paper2)}
+table.rc{border-collapse:collapse;width:100%;font-size:13px;min-width:680px}
+table.rc th{background:var(--ink);color:#fff;font-weight:500;padding:11px 10px;text-align:left;font-size:12px}
+table.rc td{padding:10px;border-bottom:1px solid #ece9e1;vertical-align:top}
+table.rc td.c{text-align:center}
+table.rc tr:hover td{background:#f1efe8}
+.badge{font-family:'Space Mono',monospace;font-size:11px;padding:2px 8px;border-radius:6px;font-weight:700}
+.b-hi{background:var(--teal);color:#fff}.b-mid{background:var(--amber-l);color:#8a5a05}.b-lo{background:var(--coral-l);color:#8a3216}
+
+/* engine umbrella banner */
+.engine-banner{background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);color:#fff;border-radius:20px;padding:38px 40px;margin:40px 0 8px;position:relative;overflow:hidden}
+.engine-banner::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 88% 20%,rgba(11,171,148,.28),transparent 46%)}
+.engine-banner>*{position:relative}
+.eb-tag{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:3px;color:var(--teal);margin-bottom:14px}
+.eb-title{font-size:clamp(28px,4vw,40px);font-weight:400;letter-spacing:-.01em;margin-bottom:12px}
+.eb-lead{font-size:15.5px;color:#c9d2dc;max-width:680px;line-height:1.7}
+.eb-subs{display:flex;align-items:center;gap:14px;margin-top:20px;flex-wrap:wrap}
+.eb-subs span{font-family:'Space Mono',monospace;font-size:13px;color:#fff;background:rgba(11,171,148,.18);border:1px solid #2f6f63;padding:7px 15px;border-radius:9px}
+.eb-subs .eb-ar{background:none;border:none;color:var(--muted2);padding:0}
+.cluster.in-engine{padding-top:30px;padding-left:22px;border-left:3px solid var(--teal-l);margin-left:6px}
+.cluster.in-engine .cl-num{color:var(--teal)}
+.nav a.nav-eng{border-color:var(--teal);color:var(--teal-d);font-weight:600}
+/* flowchart */
+.flowbox{background:var(--paper2);border:1px solid var(--line);border-radius:16px;padding:24px 24px 20px;margin-bottom:24px}
+.flowbox-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+.flowbox-h h4{font-size:16px;font-weight:700}
+.flowbox-h .cov{font-family:'Space Mono',monospace;font-size:11px;color:var(--coral);background:var(--coral-l);padding:3px 9px;border-radius:6px}
+.flowbox .fdesc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.6}
+.flowsvg{width:100%;height:auto;overflow:visible}
+.flowsvg .lane-u{fill:#eaf6f3}
+.flowsvg .lane-b{fill:#f0edf6}
+.flowsvg .lane-lbl{font-family:'Space Mono',monospace;font-size:11px;font-weight:700}
+.flowsvg .nd{fill:var(--paper2);stroke:var(--line)}
+.flowsvg .nd-u{fill:#fff;stroke:#9fd9cd}
+.flowsvg .nd-b{fill:#fff;stroke:#c3b6dd}
+.flowsvg .ntxt{font-family:'Pretendard',sans-serif;font-size:11.5px;fill:var(--ink2)}
+.flowsvg .arr{stroke:var(--muted2);stroke-width:1.6;fill:none}
+.flowsvg .vlink{stroke:#b9b3a6;stroke-width:1.4;fill:none;stroke-dasharray:3 3}
+.flow-sc{margin-top:14px;background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;font-size:13px;display:flex;gap:10px;align-items:flex-start}
+.flow-sc .ic{color:#5fd9c5;font-family:'Space Mono',monospace;font-size:11px;flex-shrink:0;padding-top:1px}
+.flow-legend{display:flex;gap:16px;margin-bottom:12px;font-size:11.5px;color:var(--muted)}
+.flow-legend span{display:inline-flex;align-items:center;gap:6px}
+.flow-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.flow-legend i.u{background:#eaf6f3;border:1px solid #9fd9cd}
+.flow-legend i.b{background:#f0edf6;border:1px solid #c3b6dd}
+/* wireframe */
+.wfwrap{margin-top:6px;padding:18px 0 4px;display:flex;justify-content:center}
+.phone{width:248px;background:#1a1a1a;border-radius:32px;padding:9px;box-shadow:0 22px 54px -26px rgba(13,27,42,.5)}
+.screen{background:#eceae3;border-radius:25px;overflow:hidden;min-height:368px;display:flex;flex-direction:column}
+.notch{height:22px;display:flex;align-items:center;justify-content:center}
+.notch::after{content:"";width:62px;height:5px;background:#bcb8ad;border-radius:3px}
+.stbar{display:flex;justify-content:space-between;padding:0 16px 6px;font-size:9px;color:#8a8579;font-family:'Space Mono',monospace}
+.scrb{flex:1;padding:4px 14px 12px;display:flex;flex-direction:column;gap:8px}
+.wt{font-size:13.5px;font-weight:700;color:#3f3c34}
+.ws{font-size:9.5px;color:#8a8579;margin-top:-5px}
+.whero{background:var(--ink);border-radius:11px;padding:12px}
+.wh-l{font-size:9.5px;color:#7fd3c5;font-family:'Space Mono',monospace}
+.wh-v{font-size:19px;font-weight:800;color:#fff;margin-top:3px;letter-spacing:-.5px}
+.wc{background:#fff;border:1px solid #e2dfd6;border-radius:10px;padding:9px 11px;display:flex;align-items:center;gap:9px}
+.wi{width:28px;height:28px;border-radius:8px;background:var(--teal-l);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.wi.t{background:var(--teal-l)}.wi.c{background:var(--coral-l)}.wi.a{background:var(--amber-l)}
+.wcl{flex:1;min-width:0}
+.wct{font-size:10.5px;font-weight:600;color:#3f3c34}
+.wcm{font-size:8.5px;color:#8a8579;margin-top:1px}
+.wa{font-size:11px;font-weight:700;color:var(--teal-d);font-family:'Space Mono',monospace;flex-shrink:0}
+.wa.t{color:var(--teal-d)}.wa.c{color:var(--coral)}.wa.a{color:var(--amber)}
+.wbtn{background:var(--teal);color:#fff;text-align:center;border-radius:10px;padding:10px;font-size:11.5px;font-weight:700;margin-top:auto}
+.wbtn.d{background:var(--ink)}.wbtn.c{background:var(--coral)}
+.wrow{display:flex;gap:7px}
+.wchip{flex:1;background:#fff;border:1px solid #e2dfd6;border-radius:9px;padding:8px 4px;text-align:center}
+.wchip .wn{font-size:13px;font-weight:800;color:var(--ink);font-family:'Space Mono',monospace}
+.wchip .wl{font-size:8px;color:#8a8579;margin-top:1px}
+.wgauge{height:8px;background:#dcd9d0;border-radius:5px;overflow:hidden}
+.wgauge i{display:block;height:100%;background:var(--teal);border-radius:5px}
+.wstamp{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.wstamp i{aspect-ratio:1;border-radius:7px;background:#fff;border:1px dashed #bcb8ad;display:flex;align-items:center;justify-content:center;font-size:11px;color:#bcb8ad;font-style:normal}
+.wstamp i.fill{background:var(--teal-l);border:1px solid var(--teal);color:var(--teal-d)}
+.wfcap{font-size:11px;color:var(--muted2);text-align:center;margin-top:10px;font-family:'Space Mono',monospace}
+
+footer{background:var(--ink);color:#7e8d9c;padding:38px 0;font-size:12px;text-align:center;font-family:'Space Mono',monospace}
+.disc{font-size:11px;color:var(--muted2);margin-top:8px;line-height:1.6;max-width:780px;margin-left:auto;margin-right:auto}
+@media(max-width:640px){
+ .principle{padding:24px}
+ .rowf{grid-template-columns:1fr;gap:4px}
+ .idea-sc{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="hero"><div class="wrap">
+ <div class="kicker">Smart Money Engine · Wallet One-App</div>
+ <h1 class="serif">스마트 머니 엔진<br><em>넣어두면 알아서 굴러갑니다</em></h1>
+ <p class="sub">월렛에 들어온 돈을 가만히 두지 않는다. 혼자·함께·벌어서·투자해서 — 어떻게 넣든 하나의 엔진이 알아서 굴린다. 14개 콘텐츠를 "유저가 진짜 쓸까"를 기준으로 4가지 방법으로 묶었다.</p>
+ <div class="meta">
+  <span>콘텐츠 · <b>14개</b></span><span>굴리는 방법 · <b>4가지</b></span>
+  <span>기준 · <b>유저가 왜 씀 &gt; 법적리스크</b></span><span>비전 · <b>금융 게임체인저</b></span>
+ </div>
+</div></div>
+
+<div class="wrap"><div class="principle">
+ <h2 class="serif">큰 틀 — 돈을 굴리는 하나의 엔진</h2>
+ <p>이 문서의 모든 콘텐츠는 결국 한 문장으로 묶인다 —</p>
+ <div class="q">"넣어둔 돈을 가만히 두지 않고, 알아서 굴려 불린다."</div>
+ <p>그 굴리는 방법이 <b>네 가지</b>일 뿐이다: <b>① 혼자</b> 굴린다 · <b>② 함께</b> 굴린다 · <b>③ 벌어서</b> 굴린다 · <b>④ 투자해서</b> 굴린다. 네 갈래로 들어온 돈은 전부 <b>같은 엔진(스마트 세이빙)</b>이 운용한다. 평가 기준은 "만들면 진짜 쓸까, 유저의 어떤 고통을 없애는가"이고, 법적 리스크는 방향만 짚었다.</p>
+</div></div>
+
+<nav class="nav"><div class="wrap" id="navwrap"></div></nav>
+
+<main id="clusters" class="wrap"></main>
+
+<!-- synergy -->
+<div class="synmap"><div class="wrap">
+ <div class="cl-head"><span class="cl-num" style="color:var(--teal)">SYNERGY</span><h2 class="cl-title serif">하나의 엔진으로 묶였을 때</h2></div>
+ <p class="cl-lead">14개 콘텐츠는 흩어진 기능이 아니라, <b style="color:#7fd9c5">스마트 머니 엔진</b> 하나로 수렴한다. <b style="color:#7fd9c5">혼자(①)·함께(②)·벌어서(③)·투자해서(④)</b> 어떤 방법으로 들어온 돈이든 같은 엔진이 굴리고, 모든 콘텐츠가 그 엔진의 물을 끌어 쓰고 다시 채운다.</p>
+ <div class="flow">
+  <div class="lab">SMART MONEY ENGINE · 네 갈래의 돈이 한 엔진으로</div>
+  <div class="flowline">
+   <span class="node">① 혼자 — 입금·자투리·캐시백</span><span class="ar">↘</span>
+  </div>
+  <div class="flowline" style="margin-top:8px">
+   <span class="node">② 함께 — 계·공동펀드·동호회</span><span class="ar">→</span>
+   <span class="node" style="background:rgba(11,171,148,.28);border-color:#5fd9c5;color:#fff">💰 스마트 세이빙 (중앙 엔진)</span><span class="ar">→</span>
+   <span class="node">송금·소비 / 투자로 확장</span>
+  </div>
+  <div class="flowline" style="margin-top:8px">
+   <span class="node">③ 벌어서 — 데이터·DePIN 수익</span><span class="ar">↗</span>
+  </div>
+  <div class="flowline" style="margin-top:8px">
+   <span class="node">④ 투자해서 — 부동산·K콘텐츠 조각</span><span class="ar">↗ (엔진 자금이 자산으로)</span>
+  </div>
+ </div>
+ <div class="smap" id="smap"></div>
+</div></div>
+
+<footer>
+ SMART MONEY ENGINE · WALLET ONE-APP<br>
+ <span class="disc">본 문서는 의사결정용 기획 초안입니다. 점수·시장규모는 정성/공개자료 기반 추정이며, 모든 금융·자산 기능은 가상자산이용자보호법·자본시장법·외국환거래법·전자금융거래법·유사수신·집합투자·사행성 등 규제 정밀 검토가 선행되어야 합니다. 법적 방향 제시는 검토 출발점일 뿐 법률 자문이 아닙니다.</span>
+</footer>
+
+<script>
+// 30개 아이디어 상세 기획 데이터
+// 필드: id, name, cluster, oneLine, what, how, hook[], pain, sc(스마트컨트랙트활용), synergy, market, legal, score
+const IDEAS = [
+{id:1,name:"스마트 세이빙 (넣어두면 자동으로 굴러가는 잔액)",cluster:"yield",
+ oneLine:"앱에 넣어둔 돈이 가만히 있지 않고 물가를 이기는 실질수익으로 매일 불어난다",
+ what:"월렛 잔액을 미국 단기국채·머니마켓에 자동 예치해, 한국 파킹통장(1.4~1.8%)을 크게 웃도는 수익(현재 연 4%대)을 매일 적립. 핵심은 세 가지: ① 변동금리를 정직하게 표시('현재 4.1% · 시장 따라 변동'), ② AI가 더 유리한 곳으로 자동 이동, ③ 명목금리가 아니라 '인플레 뺀 실질수익'으로 판단해 물가를 이기는 운용. 원화 모드/달러 모드 토글 제공.",
+ how:"입금 즉시 USDC 등으로 환산 → 토큰화 美국채·검증된 yield 프로토콜에 예치. AI가 각 예치처를 '실질수익(명목금리−인플레)' 기준으로 비교해 자동 리밸런싱하고, 인플레가 이자를 추월하는 국면엔 금 등 인플레 방어 자산을 일부 자동 편입. 이자는 실시간 누적(초당 증가 표시), '지금 받기' 한 번에 출금. 원화 모드는 환율 노출 최소, 달러 모드는 달러 보유+환차익까지.",
+ hook:["은행 이자의 2~3배, 가만히 두면 매일 쌓여요","높은 이자만 쫓지 않아요 — 물가를 이기는 진짜 수익을 찾아드려요","이자 4% 받아도 물가 5% 오르면 손해, 그 함정을 자동으로 피합니다","원화로도 달러로도 — 이자가 똑딱똑딱 차오르는 걸 지켜보세요"],
+ pain:"기준금리 2.5% 시대, 파킹통장 1.4~1.8%로 돈 넣어둘 곳이 없음. 게다가 은행은 '명목 1.8%'만 보여주고 '물가 빼면 실질 마이너스'라는 불편한 진실은 안 알려줌. 예금은 답답하고 투자는 무서운 중간 지대의 거대 수요.",
+ sc:"예치·이자분배·리밸런싱·출금을 컨트랙트가 자동 집행. 운용 내역이 온체인에 투명 기록돼 '진짜 4% 주는 거 맞아?' 의심을 코드로 증명. 변동금리·투자처 자동 변경·실질수익 기준을 모두 명시(원금보장·확정수익 표현 금지).",
+ synergy:"월렛의 심장이자 모든 자금이 모이는 중앙 저수지. 함께 굴리기·벌어서 굴리기로 들어온 돈이 전부 이 엔진으로 운용됨. 결제·자투리·캐시백(#5·6)이 자동 재적립되는 선순환의 종착점.",
+ market:"한국 요구불·파킹 예치금 수백조 규모. 단 1%만 들어와도 조 단위. 토스·카뱅 파킹통장 가입자 직접 타깃 + 달러 모드로 환테크·서학개미까지.",
+ legal:"가상자산이용자보호법·유사수신·외국환거래법 복합. 방향: '예금'이 아닌 '운용 위탁' 구조, 원금보장·확정수익 표현 절대 금지, 변동성 고지 필수, 신탁·라이선스 파트너십 또는 규제 샌드박스. 달러 모드는 외국환 검토 추가.",
+ score:43.5},
+
+
+
+
+{id:5,name:"자투리 자동투자 (반올림)",cluster:"yield",
+ oneLine:"4,500원 결제하면 500원이 자동으로 투자된다",
+ what:"결제 시 1,000원 단위로 반올림한 잔돈을 자동으로 투자/예치. 무의식적 저축.",
+ how:"결제 트리거 → 차액 계산 → 자동으로 yield 엔진 or 소액 자산에 적립. 컨트랙트가 자동 집행.",
+ hook:["쓸 때마다 모이는 돈","잔돈이 투자가 됩니다","의식 안 해도 쌓이는 시드"],
+ pain:"목돈 모으기 어렵고 저축은 의지력 싸움. '시작'의 장벽.",
+ sc:"결제-적립을 컨트랙트로 자동 연결. Acorns 모델의 온체인 버전.",
+ synergy:"결제·잔돈을 yield 엔진(#1)에 잇는 다리. 쓸수록 자산이 쌓이는 선순환 → 결제·투자 동시 락인.",
+ market:"Acorns(미국 수백만 가입) 검증 모델. MZ·사회초년생 타깃.",
+ legal:"소액투자·자동이체 약관. 비교적 안전.",
+ score:34.0},
+
+
+{id:7,name:"공동 적금·투자 클럽 (함께 굴리기)",cluster:"social",
+ oneLine:"친구·연인·동호회가 함께 모아 은행보다 높은 이자로 굴리거나 함께 투자한다",
+ what:"여러 명이 공동 목표로 모으고(적금) 운용까지 함께한다. 단순 모임통장을 넘어, 모인 돈을 고이자로 굴리거나 투표로 함께 투자. 카뱅 모임통장보다 높은 수익 + 투명한 입금 현황 + 횡령 불가.",
+ how:"공동 금고 컨트랙트에 각자 입금 → 멀티시그로 인출 통제 → 고이자 엔진 운용 또는 투자 투표 → 수익을 지분대로 자동 분배.",
+ hook:["같이 모으면 이자도 더","총무 없는 모임통장·투자모임","누가 안 냈는지·수익이 얼만지 한눈에"],
+ pain:"카뱅 모임통장은 이자 낮고 총무 1인이 인출 가능(횡령 위험). 친구끼리 투자모임은 엑셀·계좌공유 수준이라 불투명·분쟁.",
+ sc:"멀티시그 공동금고 + 고이자 운용/투자 집행 + 수익 자동 분배. 인출에 다수 동의 필요.",
+ synergy:"'함께 굴리기'의 핵심. #1 고이자 엔진을 여럿이 공유. 디지털 계(#27)·커뮤니티 금고(#31)와 한 묶음. 친구 초대가 곧 그로스.",
+ market:"카뱅 모임통장 수천만 + 친구 투자모임 수요. 여행·결혼·동호회·투자클럽.",
+ legal:"공동자금 관리 + 집합투자(펀드) 규제 가능성. 방향: 소규모 사적 모임 한정, 공모 회피, 수익 약속 배제.",
+ score:35.0},
+
+{id:8,name:"소비 캐시백 자동 재투자",cluster:"yield",
+ oneLine:"카드 캐시백을 현금이 아니라 자동으로 굴린다",
+ what:"결제 캐시백을 현금 환급 대신 자동 운용/투자로 전환 → 복리.",
+ how:"캐시백 발생 → 컨트랙트가 yield 엔진 or 자산에 자동 적립.",
+ hook:["캐시백이 투자금이 됩니다","쓸수록 불어나는 캐시백","1%가 복리로"],
+ pain:"캐시백은 받아도 흐지부지 소비. 자산이 안 됨.",
+ sc:"캐시백-재투자 자동 연결.",
+ synergy:"#5와 거의 동일 메커니즘(결제→자동적립). → #5에 흡수 가능. 결제 클러스터와 yield의 접점.",
+ market:"카드·페이 사용자 전체.",
+ legal:"안전.",
+ score:34.0},
+];
+
+// 추가 데이터는 IDEAS2~IDEAS4에 분할
+
+const IDEAS2 = [
+// ===== 클러스터 2: 막혀있던 글로벌 자산을 누구나 (글로벌 접근) =====
+
+{id:10,name:"부동산 조각투자 (만원으로 건물주)",cluster:"asset",
+ oneLine:"커피 한 잔 값으로 건물 일부를 소유하고 임대수익을 배당받는다",
+ what:"상업용 부동산을 토큰화해 만원 단위로 조각 투자, 임대수익을 자동 배당. 국내 부동산으로 시작해 검증 뒤 해외 부동산으로 확장. (카사·소유 등이 이미 합법으로 운영 중인, 조각투자 중 가장 길이 열린 영역)",
+ how:"부동산 SPV를 수익증권으로 토큰화 → 소액 조각 매수 → 임대수익을 컨트랙트가 지분대로 자동 분배 → 24시간 지분 거래로 유동성. 발행·정산·배당 자동.",
+ hook:["만원으로 건물주가 됩니다","월세가 통장에 자동으로","수천만원 없어도, 강남 빌딩 일부를"],
+ pain:"부동산 투자는 목돈(수억) 필요 + 환금성 0. 소액 투자자는 평생 건물주 못 됨. 리츠는 있지만 증권사 거쳐야 하고 체감이 약함.",
+ sc:"조각 소유·임대수익 분배·지분 거래를 컨트랙트가 자동 집행. 소유 내역 온체인 투명 기록.",
+ synergy:"#1 스마트 세이빙으로 굴리던 돈이 실물 자산 투자로 흐르는 출구. K-콘텐츠 로열티(#12)·회원권 조각(#13)과 '조각투자' 클러스터를 이룸.",
+ market:"국내 부동산 조각투자 시장 형성 중(카사 등). 2030년 토큰증권 시장 367조 전망. 부동산이 그 핵심 축.",
+ legal:"조각투자 중 법적 경로가 가장 열린 영역(현 샌드박스 + 26년 자본시장법·전자증권법 개정 통과, 유통망 개설 예정). 방향: 수익증권 구조·신탁, 국내부터 인가 경로. 해외 부동산은 외국환·현지법 검토로 장기 과제.",
+ score:36.0},
+
+
+
+
+
+
+];
+
+const IDEAS3 = [
+// ===== 클러스터 5: 환율·인플레로부터 자산 지키기 (헷지) =====
+
+
+
+
+// ===== 클러스터 6: 좋아하는 것에 투자 (새 자산) =====
+{id:21,name:"K-콘텐츠 로열티 투자 (음원·웹툰·드라마)",cluster:"asset",
+ oneLine:"좋아하는 가수·웹툰의 저작권 수익을 나눠 받는다",
+ what:"K-pop 음원·웹툰·드라마 IP의 로열티를 조각 투자, 스트리밍·흥행 수익을 배당으로.",
+ how:"IP 로열티권을 토큰화 → 소액 조각 매수 → 발생 수익을 컨트랙트가 자동 배당.",
+ hook:["덕질이 투자가 됩니다","내 최애 음원 저작권자 되기","스밍할 때마다 배당"],
+ pain:"팬덤은 소비만 하고 수익은 못 가짐. 좋아하는 IP의 성공에 참여 불가.",
+ sc:"로열티 배당을 컨트랙트가 투명 자동 분배. 24시간 지분 거래.",
+ synergy:"#22와 '실물·IP 조각투자' 클러스터. K-콘텐츠 팬덤을 월렛으로 유입(글로벌 K팬 시너지). 폴리볼 팬덤 BM 노하우 활용.",
+ market:"뮤직카우가 검증(누적 투자 340억+, 혁신금융 지정). K-콘텐츠 글로벌 팬덤.",
+ legal:"투자계약증권 분류(뮤직카우 선례). 방향: 신탁수익증권 구조·혁신금융 샌드박스. 가장 검증된 길.",
+ score:35.5},
+
+{id:22,name:"콘도·리조트 회원권 조각",cluster:"asset",
+ oneLine:"수천만원 회원권을 조각내 소액 소유·거래",
+ what:"고가 콘도/리조트 회원권을 토큰화해 조각 소유·이용권 분배·거래.",
+ how:"회원권 토큰화 → 조각 매수 → 이용일수 배분 + 양도 가능.",
+ hook:["수천만원 회원권을 만원 단위로","안 쓰는 회원권 조각 거래","리조트 조각 주인"],
+ pain:"회원권은 통째 구매(수천만원)만 가능, 양도도 어려움. 유동성 0.",
+ sc:"조각 소유·이용권 배분·양도를 컨트랙트가 관리.",
+ synergy:"#10·#G 권리거래와 '조각·양도' 클러스터.",
+ market:"회원권 시장. 단 니치.",
+ legal:"회원권·집합투자 분류 가능성. 방향: 조각투자 샌드박스 검토.",
+ score:33.0},
+
+// ===== 클러스터 7: 가만히 있어도 버는 (데이터/DePIN) =====
+{id:23,name:"데이터 셀프판매 (걸음·소비·수면)",cluster:"data",
+ oneLine:"빅테크가 가져가던 내 데이터로 내가 돈 번다",
+ what:"걸음·수면·소비 등 내 데이터를 익명화해 자동 판매, 매월 자동 수익.",
+ how:"동의 기반 데이터 익명 집계 → 보험사·리서치사 구매 → 컨트랙트가 수익 자동 분배.",
+ hook:["내 데이터로 내가 돈 벌기","가만히 있어도 매월 입금","페북이 가져가던 걸 내가"],
+ pain:"빅테크가 데이터로 돈 버는데 정작 사용자는 0원. 데이터 주권 부재.",
+ sc:"데이터 판매·수익 분배를 컨트랙트가 투명 자동 집행. 누가 샀는지 추적 가능.",
+ synergy:"#24·25·26과 'DePIN/Earn' 클러스터. 수익이 yield 엔진(#1)으로 자동 적립 → 'Earn & Grow' 루프.",
+ market:"Grass(300만+), DIMO, Jasmy 검증. 데이터 경제 급성장.",
+ legal:"개인정보보호법. 방향: 명확한 동의·익명화·옵트인 설계.",
+ score:35.0},
+
+{id:24,name:"와이파이·대역폭 공유 보상",cluster:"data",
+ oneLine:"남는 인터넷을 팔아서 수익을 받는다",
+ what:"유휴 인터넷 대역폭을 공유하고 토큰 보상.",
+ how:"대역폭 제공량을 컨트랙트가 측정·보상(Grass·Helium 모델).",
+ hook:["남는 와이파이가 돈","켜두기만 하면 수익","인터넷도 공유경제"],
+ pain:"유휴 자원이 그냥 버려짐.",
+ sc:"자원 제공량 측정·보상 자동화.",
+ synergy:"#23 데이터 클러스터에 통합. 수익→yield 적립.",
+ market:"DePIN(Grass·Helium) 글로벌. 단 한국 일반 사용자 체감은 낮음.",
+ legal:"통신·약관. 방향: 통신사 약관 충돌 검토.",
+ score:32.0},
+
+{id:25,name:"위치데이터 → 지역 리워드",cluster:"data",
+ oneLine:"방문 인증하면 동네 가게/지자체 보상",
+ what:"매장·지역 방문을 인증하면 지역 리워드·할인.",
+ how:"위치 인증 → 컨트랙트가 리워드 자동 지급. 가맹점·지자체 후원.",
+ hook:["방문만 해도 보상","동네 다니면 돈","발길이 리워드"],
+ pain:"방문·체크인이 가치로 안 이어짐.",
+ sc:"방문 인증·보상 자동 집행. 조작 불가 검증.",
+ synergy:"#H 자영업·동네화폐와 연결. 지역경제 클러스터.",
+ market:"로컬 커머스·지자체. 중간.",
+ legal:"위치정보·개인정보. 동의 설계.",
+ score:33.0},
+
+{id:26,name:"에너지 절약 → 토큰 보상",cluster:"data",
+ oneLine:"전기 아끼면 자동으로 보상받는다 (ESG)",
+ what:"전력 절감량을 측정해 토큰 보상. ESG 트렌드.",
+ how:"스마트미터 연동 → 절감량 측정 → 컨트랙트 보상.",
+ hook:["전기 아끼면 돈","지구도 지키고 보상도","절약이 수익"],
+ pain:"절약 동기 약함. ESG 행동에 보상 없음.",
+ sc:"절감량 측정·보상 자동화(DePIN 에너지).",
+ synergy:"#23 데이터/Earn 클러스터. ESG 브랜딩.",
+ market:"ESG·에너지. 단 인프라 의존, 초기.",
+ legal:"전력·데이터. 방향: 한전·스마트미터 제휴 필요.",
+ score:32.0},
+
+// ===== 클러스터 8: 함께 모으고 함께 투자 (모임/소셜) =====
+{id:27,name:"디지털 계 (계주 사기 0)",cluster:"social",
+ oneLine:"계주 없이 코드가 운영하는 계 — 횡령 원천 차단",
+ what:"전통 계를 컨트랙트로. 계주 없이 순번대로 자동 곗돈 분배, 사기 0.",
+ how:"멤버 자동 납입 → 컨트랙트가 순번대로 자동 지급. 미납 자동 패널티.",
+ hook:["계주 도망 못 가는 계","엄마가 하시던 계, 앱으로","사기 0, 코드가 운영"],
+ pain:"계주 횡령·잠수 사고 빈번. 신뢰가 사람에게 묶임.",
+ sc:"곗돈 보관·순번 분배·패널티를 컨트랙트가 자동. 사람(계주) 제거가 핵심.",
+ synergy:"#7·29·31과 '함께 모으는 돈' 클러스터. 한국 특화 강력. yield 엔진으로 곗돈 운용 시 이자까지.",
+ market:"한국 사적 계 시장 거대(수십조 추정).",
+ legal:"유사수신 리스크. 방향: '친목 자금관리'로 명확히, 수익 약속 배제, 구조 설계 신중.",
+ score:34.0},
+
+
+
+{id:30,name:"카피 트레이딩 (고수 자동 추종)",cluster:"social",
+ oneLine:"검증된 고수의 매매를 자동으로 따라 한다",
+ what:"실적 검증된 투자 고수의 포트폴리오를 자동 복제.",
+ how:"고수 매매를 컨트랙트가 실시간 복제 실행. 성과·이력 온체인 검증.",
+ hook:["고수 따라 자동 투자","초보도 전문가처럼","검증된 실력만 추종"],
+ pain:"초보는 뭘 살지 모름. 정보·실력 격차.",
+ sc:"고수 매매 복제를 자동 실행. 실적이 위변조 불가 온체인 기록이라 '진짜 고수' 검증.",
+ synergy:"#7 공동 투자 클럽과 함께 '함께 굴리기'. 글로벌 투자(#10)와도 결합. SocialFi 후크.",
+ market:"eToro(글로벌 검증). 초보 투자자 거대.",
+ legal:"투자일임·유사투자자문 규제. 방향: 라이선스 또는 정보제공 한정 설계.",
+ score:33.0},
+
+{id:31,name:"커뮤니티 금고 (동호회 자산)",cluster:"social",
+ oneLine:"동호회 공동 자산을 총무 없이 투명하게 관리",
+ what:"동호회·단체 공동 자산을 멀티시그로 투명 관리, 횡령 차단.",
+ how:"공동 금고 컨트랙트 → 지출에 다수 동의 → 모든 내역 영구 공개.",
+ hook:["총무 횡령 불가능","회비 내역 다 투명","공금이 안전한 동호회"],
+ pain:"총무 1인 위임 → 횡령·불투명 분쟁 단골.",
+ sc:"멀티시그 + 영구 장부. 다수 동의 없이 인출 불가.",
+ synergy:"#7·27·29 '함께 모으는 돈' 클러스터 통합. yield로 공금 운용.",
+ market:"동호회·단체 광범위.",
+ legal:"공동자금 관리. 안전.",
+ score:33.0},
+
+
+
+
+];
+
+// 각 아이디어별 와이어프레임 (모바일 화면 innerHTML)
+// 공용 클래스는 build_report에서 정의됨
+const WF = {
+1:`<div class="wt">스마트 세이빙</div><div class="ws">넣어두면 매일 불어나요</div>
+ <div class="whero"><div class="wh-l">내 잔액 · 연 4.2%</div><div class="wh-v">₩12,480,320</div></div>
+ <div class="wc"><div class="wi t">📈</div><div class="wcl"><div class="wct">오늘 이자</div><div class="wcm">은행의 약 2.8배</div></div><div class="wa">+1,436</div></div>
+ <div class="wc"><div class="wi">🏦</div><div class="wcl"><div class="wct">자동 운용 중</div><div class="wcm">美단기국채·MMF</div></div><div class="wa">안전</div></div>
+ <div class="wbtn">이자 받기 · 출금</div>`,
+
+5:`<div class="wt">자투리 자동투자</div><div class="ws">쓸 때마다 모여요</div>
+ <div class="wc"><div class="wi">☕</div><div class="wcl"><div class="wct">스타벅스 4,500원</div><div class="wcm">반올림 → 500원 적립</div></div><div class="wa t">+500</div></div>
+ <div class="wc"><div class="wi">🍔</div><div class="wcl"><div class="wct">버거 8,200원</div><div class="wcm">반올림 → 800원 적립</div></div><div class="wa t">+800</div></div>
+ <div class="whero"><div class="wh-l">이번 달 자투리</div><div class="wh-v">₩42,300</div></div>
+ <div class="wbtn">적립 규칙 설정</div>`,
+
+7:`<div class="wt">공동 적금</div><div class="ws">같이 모으면 이자 더</div>
+ <div class="whero"><div class="wh-l">제주 여행 · 4명 · 연 4%</div><div class="wh-v">₩2,840,000</div></div>
+ <div class="wgauge"><i style="width:71%"></i></div>
+ <div class="wc"><div class="wi t">👥</div><div class="wcl"><div class="wct">납입 현황</div><div class="wcm">4/4 완납 · 인출 2/3 동의</div></div></div>
+ <div class="wbtn">이번 달 납입</div>`,
+
+8:`<div class="wt">캐시백 자동 재투자</div><div class="ws">캐시백이 투자금으로</div>
+ <div class="wc"><div class="wi t">💸</div><div class="wcl"><div class="wct">이번 달 캐시백</div><div class="wcm">현금 대신 자동 운용</div></div><div class="wa">+18,400</div></div>
+ <div class="whero"><div class="wh-l">재투자 누적 · 복리</div><div class="wh-v">₩236,800</div></div>
+ <div class="wbtn">재투자 ON</div>`,
+
+10:`<div class="wt">해외 부동산 조각</div><div class="ws">만원으로 건물주</div>
+ <div class="wc"><div class="wi">🏙️</div><div class="wcl"><div class="wct">맨해튼 오피스 A동</div><div class="wcm">조각 0.002% 보유</div></div><div class="wa t">+4.8%</div></div>
+ <div class="whero"><div class="wh-l">이번 달 임대수익</div><div class="wh-v">₩6,200</div></div>
+ <div class="wc"><div class="wi a">🌐</div><div class="wcl"><div class="wct">24시간 지분 거래</div><div class="wcm">언제든 매도 가능</div></div></div>
+ <div class="wbtn">조각 더 사기</div>`,
+};
+
+const WF2 = {
+13:`<div class="wt">구독 자동 청소</div><div class="ws">안 쓰는 거 찾아서 끊어요</div>
+ <div class="wc"><div class="wi a">⚠️</div><div class="wcl"><div class="wct">6개월째 안 본 OTT</div><div class="wcm">월 13,500원 새는 중</div></div><div class="wa c">해지?</div></div>
+ <div class="wc"><div class="wi">🎵</div><div class="wcl"><div class="wct">음악 구독 중복</div><div class="wcm">2개 동시 결제</div></div><div class="wa c">정리</div></div>
+ <div class="whero"><div class="wh-l">자동 절약 가능액</div><div class="wh-v">₩31,000/월</div></div>
+ <div class="wbtn">한번에 정리</div>`,
+
+14:`<div class="wt">팁·후원 즉시</div><div class="ws">수수료 0, 100% 전달</div>
+ <div class="wc"><div class="wi t">🎨</div><div class="wcl"><div class="wct">크리에이터에게</div><div class="wcm">중간 수수료 0원</div></div><div class="wa t">100%</div></div>
+ <div class="wrow"><div class="wchip"><div class="wn">₩1천</div><div class="wl"></div></div><div class="wchip"><div class="wn">₩5천</div><div class="wl"></div></div><div class="wchip"><div class="wn">₩1만</div><div class="wl"></div></div></div>
+ <div class="wc"><div class="wi">🌐</div><div class="wcl"><div class="wct">글로벌 후원</div><div class="wcm">환전 없이 즉시</div></div></div>
+ <div class="wbtn">팁 보내기</div>`,
+
+21:`<div class="wt">K-콘텐츠 로열티</div><div class="ws">덕질이 투자가 됩니다</div>
+ <div class="wc"><div class="wi t">🎵</div><div class="wcl"><div class="wct">최애 아이돌 신곡</div><div class="wcm">저작권 조각 보유</div></div><div class="wa t">월 배당</div></div>
+ <div class="wc"><div class="wi">📚</div><div class="wcl"><div class="wct">인기 웹툰 IP</div><div class="wcm">흥행 수익 일부</div></div><div class="wa t">+5,200</div></div>
+ <div class="whero"><div class="wh-l">이번 달 로열티 배당</div><div class="wh-v">₩14,700</div></div>
+ <div class="wbtn d">조각 사러가기</div>`,
+
+22:`<div class="wt">회원권 조각</div><div class="ws">수천만원을 만원 단위로</div>
+ <div class="wc"><div class="wi">🏖️</div><div class="wcl"><div class="wct">리조트 회원권 #7</div><div class="wcm">조각 소유 + 이용일 배분</div></div><div class="wa t">3박/년</div></div>
+ <div class="wc"><div class="wi a">↔</div><div class="wcl"><div class="wct">안 쓰는 이용권</div><div class="wcm">조각 양도 가능</div></div></div>
+ <div class="wbtn">조각 거래</div>`,
+
+23:`<div class="wt">데이터 셀프판매</div><div class="ws">가만히 있어도 매월 입금</div>
+ <div class="whero"><div class="wh-l">이번 달 데이터 수익</div><div class="wh-v">₩14,200</div></div>
+ <div class="wc"><div class="wi t">🏃</div><div class="wcl"><div class="wct">건강 데이터</div><div class="wcm">익명 · 보험사 구매</div></div><div class="wa t">+8,400</div></div>
+ <div class="wc"><div class="wi a">🛒</div><div class="wcl"><div class="wct">소비 패턴</div><div class="wcm">동의 항목만 판매</div></div><div class="wa t">+5,800</div></div>
+ <div class="wbtn">판매 항목 관리</div>`,
+
+24:`<div class="wt">대역폭 공유</div><div class="ws">남는 인터넷이 돈</div>
+ <div class="wc"><div class="wi t">📡</div><div class="wcl"><div class="wct">유휴 대역폭 공유 중</div><div class="wcm">켜두면 자동 적립</div></div><div class="wa t">+320/일</div></div>
+ <div class="whero"><div class="wh-l">누적 보상</div><div class="wh-v">₩9,600</div></div>
+ <div class="wbtn">공유 ON/OFF</div>`,
+
+25:`<div class="wt">방문 리워드</div><div class="ws">발길이 보상</div>
+ <div class="wc"><div class="wi t">📍</div><div class="wcl"><div class="wct">동네 카페 방문 인증</div><div class="wcm">위치 확인 → 자동 보상</div></div><div class="wa t">+1,000</div></div>
+ <div class="wstamp"><i class="fill">✓</i><i class="fill">✓</i><i class="fill">✓</i><i>+</i><i>+</i><i>+</i></div>
+ <div class="wbtn">근처 리워드 보기</div>`,
+
+26:`<div class="wt">에너지 절약 보상</div><div class="ws">아끼면 토큰</div>
+ <div class="wc"><div class="wi t">⚡</div><div class="wcl"><div class="wct">전월 대비 12% 절감</div><div class="wcm">스마트미터 연동</div></div><div class="wa t">+4,200</div></div>
+ <div class="whero"><div class="wh-l">ESG 절약 보상</div><div class="wh-v">₩12,800</div></div>
+ <div class="wbtn">절약 현황</div>`,
+
+27:`<div class="wt">디지털 계</div><div class="ws">계주 없이 코드가 운영</div>
+ <div class="whero"><div class="wh-l">친목계 · 10명 · 3회차</div><div class="wh-v">이번 달: 박지훈</div></div>
+ <div class="wc"><div class="wi t">🔒</div><div class="wcl"><div class="wct">곗돈 자동 보관·지급</div><div class="wcm">계주 없음 · 사기 0</div></div><div class="wa">₩500만</div></div>
+ <div class="wrow"><div class="wchip"><div class="wn">10</div><div class="wl">완납</div></div><div class="wchip"><div class="wn">0</div><div class="wl">미납</div></div><div class="wchip"><div class="wn">3/10</div><div class="wl">회차</div></div></div>
+ <div class="wbtn d">이번 달 납입</div>`,
+
+30:`<div class="wt">카피 트레이딩</div><div class="ws">검증된 고수 따라</div>
+ <div class="wc"><div class="wi t">🏆</div><div class="wcl"><div class="wct">고수 A · 추종 중</div><div class="wcm">실적 온체인 검증</div></div><div class="wa t">+18%/년</div></div>
+ <div class="wc"><div class="wi">🔄</div><div class="wcl"><div class="wct">매매 자동 복제</div><div class="wcm">실시간 따라하기</div></div></div>
+ <div class="wbtn d">추종 시작</div>`,
+
+31:`<div class="wt">커뮤니티 금고</div><div class="ws">총무 횡령 불가능</div>
+ <div class="whero"><div class="wh-l">동호회 공금 · 28명</div><div class="wh-v">₩3,120,000</div></div>
+ <div class="wc"><div class="wi t">🔐</div><div class="wcl"><div class="wct">지출에 다수 동의</div><div class="wcm">멀티시그 · 영구 장부</div></div><div class="wa">2/3</div></div>
+ <div class="wbtn">지출 제안</div>`,
+};
+
+// 각 아이디어별 기존 플레이어(rivals) + 우리 강점(edge)
+const RIVAL = {
+1:{rivals:"<b>글로벌</b>: Robinhood Gold 현금 스윕(연 3.35~3.75%, 단 월 $5 구독+미국 한정), Coinbase USDC 이자(매출 40%+), PayPal·Cash App USDC. <b>한국</b>: 토스뱅크 파킹통장(1.4~1.8%)·카카오뱅크 세이프박스(1.6%) — 전부 '예금' 기반이라 기준금리 한계에 묶임.",
+  edge:"한국 파킹통장은 원화 예금이라 한은 기준금리(2.5%) 천장에 갇힘. 우리는 <b>달러 국채 수익(4%+)을 원화 사용자에게 연결</b> → 구조적으로 2배 높은 천장. Robinhood는 미국 전용·구독 유료지만 우리는 한국 원화 사용자 대상·기본 기능. '환전→예치→환원'을 완전히 숨겨 토스처럼 매끄럽게."},
+5:{rivals:"<b>글로벌</b>: Acorns(잔돈 자동투자, 수백만 가입). <b>한국</b>: 토스 '저금통'(잔돈 모으기, 단 저금만·투자 아님), 카카오뱅크 '저금통'.",
+  edge:"토스/카뱅 저금통은 '모으기'에서 끝(이자 미미). 우리는 잔돈을 <b>#1 고이자 엔진에 자동 투입</b> → 모으는 즉시 4% 운용. 결제할수록 자산이 굴러가는 루프가 차별점."},
+7:{rivals:"<b>한국</b>: 카카오뱅크 모임통장(수천만), 토스 모임통장 — 압도적 대중화. 단 이자 낮고 총무 1인 인출 구조.",
+  edge:"카뱅 모임통장의 두 약점을 동시 타격: <b>① 멀티시그로 총무 횡령 차단, ② 고이자 운용</b>. '같이 모으면 이자도 더'는 카뱅이 구조상 못 따라옴(예금 한계)."},
+8:{rivals:"<b>한국</b>: 카드사 캐시백(현금/포인트 환급이 대부분), 토스 '캐시백'. 재투자 자동 연결은 없음.",
+  edge:"기존 캐시백은 현금으로 받아 흐지부지 소비됨. 우리는 <b>캐시백→고이자 자동 재투자</b>로 복리화. → #5와 묶어 '쓸수록 불어나는' 루프."},
+10:{rivals:"<b>글로벌</b>: RealT(미국 부동산 토큰), Lofty. <b>한국</b>: 카사(5천원부터, 업계 1위·혁신금융), 소유·펀블·비브릭 — 단 전부 <b>국내 부동산</b> 한정.",
+  edge:"카사 등 국내 조각투자는 한국 건물만. 우리는 <b>해외 부동산(맨해튼 등)을 만원에</b> — 개인이 원천 불가능했던 영역. 단 규제·유동성 난도 최상이라 장기 과제."},
+18:{rivals:"<b>한국</b>: 트래블월렛·하나 트래블로그(원클릭 환전), 토스/은행 외화통장. 이미 환전 UX는 대중화.",
+  edge:"기존 원클릭 환전은 '실물 외화'라 영업시간·송금 제약. 우리는 <b>스테이블코인 기반 24시간·주말·즉시</b>. + 보유만 해도 #4 이자 발생. → 글로벌 자산 클러스터 진입점."},
+};
+
+const RIVAL2 = {
+21:{rivals:"<b>한국</b>: 뮤직카우(음악 저작권, 누적 투자 340억·혁신금융 지정·키움 제휴) — 음원에 특화. <b>글로벌</b>: Royal·anotherblock(음원 NFT).",
+  edge:"뮤직카우는 음원만·국내 곡 위주. 우리는 <b>음원+웹툰+드라마 등 K-콘텐츠 IP 전방위 + 글로벌 K팬 직접 유입</b>. 폴리볼에서 쌓은 팬덤 BM 노하우 활용. 뮤직카우가 닦은 '투자계약증권' 법적 길을 그대로 활용 가능."},
+22:{rivals:"<b>한국</b>: 콘도·리조트 회원권 중개(대명·한화리조트 자체 양도) — 단 통째 거래·유동성 낮음. 조각화는 거의 없음.",
+  edge:"기존 회원권은 통째 매매·양도 절차 복잡. 우리는 <b>조각 소유+이용일 배분+자유 양도</b>. 단 시장 니치, 회원권 법적 성격 검토 필요."},
+23:{rivals:"<b>글로벌</b>: Grass(300만+, 데이터→AI), DIMO(차량), Jasmy. <b>한국</b>: 거의 없음 — 데이터는 빅테크·통신사가 가져감, 개인 보상 0.",
+  edge:"한국엔 '내 데이터로 내가 버는' 서비스가 사실상 전무. 우리가 선점 가능. 수익을 <b>#1 고이자로 자동 적립</b>해 'Earn & Grow' 루프. 단 개인정보보호법 동의 설계가 핵심."},
+24:{rivals:"<b>글로벌</b>: Grass·Helium·Honeygain(대역폭 공유). <b>한국</b>: 없음.",
+  edge:"DePIN은 글로벌엔 있지만 한국 일반 사용자 체감은 0. → #23 데이터 클러스터에 통합. 통신사 약관 충돌 검토 필요."},
+25:{rivals:"<b>한국</b>: 시럽·스탬프 앱, 네이버 '내 단골', 지역화폐 앱 — 방문 스탬프는 있으나 '검증가능 보상·자산화'는 없음.",
+  edge:"기존 스탬프는 가게 귀속·소멸. 우리는 <b>조작불가 검증 방문 인증 + 양도가능 리워드</b>. 지역화폐·자영업 클러스터와 연결."},
+26:{rivals:"<b>글로벌</b>: DePIN 에너지(일부). <b>한국</b>: 한전 에너지캐시백(절감 시 현금, 단 신청·정산 번거롭고 소액).",
+  edge:"한전 캐시백은 절차 복잡·체감 낮음. 우리는 스마트미터 연동 <b>자동 측정·자동 보상</b>. → #23 클러스터. 한전 제휴 필요."},
+27:{rivals:"<b>한국</b>: 전통 계(오프라인, 계주 신뢰 기반·사기 빈번), 카카오뱅크 모임통장(계 대용으로 일부 사용). 디지털 계 전용 서비스는 거의 없음.",
+  edge:"전통 계의 핵심 리스크가 '계주'인데 우리는 <b>계주를 코드로 대체</b> → 횡령·잠수 원천 차단. 한국 특화라 글로벌 경쟁 0. 곗돈을 #1로 운용하면 이자까지. 단 유사수신 리스크 신중 설계."},
+30:{rivals:"<b>글로벌</b>: eToro(카피트레이딩 원조, 수백만). <b>한국</b>: 거의 없음 — 유사투자자문(리딩방)은 불법·불투명 난립.",
+  edge:"한국 '리딩방'은 불투명·사기 온상. 우리는 <b>실적이 위변조 불가 온체인 기록</b>이라 '진짜 고수' 검증 가능. eToro의 신뢰 버전. 단 투자일임 라이선스 검토."},
+31:{rivals:"<b>한국</b>: 카카오뱅크 모임통장, 더치트(회비 관리 앱) — 단 총무 1인 권한·불투명.",
+  edge:"#27과 함께 '함께 모으는 돈' 엔진으로 통합. 멀티시그+영구장부로 총무 횡령 불가."},
+};
+
+// 클러스터별 플로우차트 (연관 아이디어 통합)
+// 각 플로우: title, covers(포함 아이디어 id), user레인 노드들, back레인 노드들, 연결
+// 노드: {id, lane:'u'|'b', label, type:'start'|'process'|'decision'|'sc'|'end'}
+// SVG로 렌더. 간단한 좌->우 흐름.
+
+const FLOWS = {
+yield:{
+ title:"스마트 세이빙 엔진",
+ covers:"#1~3 통합",
+ desc:"스마트 세이빙(#1)이 잔액 고이자·실시간 이자·AI 자동 최적예치·원화/달러·인플레 방어를 모두 흡수한 단일 엔진. 자투리(#2)·캐시백 재투자(#3)가 그 입력단으로 자동 적립.",
+ steps:[
+  {u:"원화/달러 입금 · 결제 잔돈 · 캐시백",b:"USDC로 자동 환산"},
+  {u:"'넣어두기' — 변동금리 안내 확인",b:"AI가 실질수익(금리−인플레) 최고처 탐색"},
+  {u:"실시간 이자 + 실질수익률 표시",b:"美국채·MMF 예치, 인플레 추월 시 금 일부 편입"},
+  {u:"이자 받기 / 출금",b:"이자 자동 적립 → 출금 시 원화·달러 환산"},
+ ],
+ sc:"컨트랙트: 예치·실질수익 기준 리밸런싱·이자분배·출금 자동 집행 (변동금리·투자처 변경 온체인 투명)"
+},
+asset:{
+ title:"조각투자 (부동산·K콘텐츠·회원권)",
+ covers:"#12~14 통합",
+ desc:"부동산 조각(#12)·K-콘텐츠 로열티(#13)·회원권 조각(#14)이 '실물·권리 자산 토큰화 + 수익 배당'이라는 공통 구조를 공유. 조각투자는 한국에서 가장 길이 열린 영역.",
+ steps:[
+  {u:"투자할 자산 선택 (건물·음원·회원권)",b:"실물/권리를 수익증권으로 토큰화"},
+  {u:"만원 단위 조각 매수",b:"조각 소유권 컨트랙트 기록"},
+  {u:"배당·이용권 수령 / 양도",b:"임대료·로열티 수익 자동 분배 · 24시간 지분 거래"},
+ ],
+ sc:"컨트랙트: 자산 토큰화·조각 소유·수익 자동분배·지분 거래 집행"
+},
+data:{
+ title:"데이터·자원 수익화 (Earn)",
+ covers:"#8~11 통합",
+ desc:"데이터 셀프판매(#8)·대역폭 공유(#9)·방문 리워드(#10)·에너지 절약(#11)이 '자원 제공→측정→자동보상' 동일 패턴. 수익은 ①의 고이자 엔진으로 자동 적립.",
+ steps:[
+  {u:"데이터·자원·행동 동의 제공",b:"익명화·제공량 측정"},
+  {u:"(가만히 있어도)",b:"구매자(보험·리서치·AI사) 매칭"},
+  {u:"수익 확인",b:"판매대금 컨트랙트 자동 분배"},
+  {u:"수익 자동 적립 (→#1)",b:"고이자 엔진으로 재투입 (복리)"},
+ ],
+ sc:"컨트랙트: 데이터 판매·수익분배 투명 자동 (누가 샀는지 추적)"
+},
+social:{
+ title:"함께 모으는 돈",
+ covers:"#4~7 통합",
+ desc:"공동 적금·투자 클럽(#4)을 중심으로 디지털 계(#5)·카피트레이딩(#6)·커뮤니티 금고(#7)가 공동금고+멀티시그+고이자 운용을 공유. 모인 돈은 ①의 엔진이 그대로 굴림.",
+ steps:[
+  {u:"모임 생성 · 친구 초대",b:"공동금고 멀티시그 컨트랙트 생성"},
+  {u:"각자 납입 / 투자 투표",b:"납입 자동 기록 · 다수결 집계"},
+  {u:"진행 현황 투명 확인",b:"순번 분배(계)·투자 집행(클럽)·고이자 운용"},
+  {u:"수령 / 정산",b:"지분·순번대로 자동 분배 (횡령 0)"},
+ ],
+ sc:"컨트랙트: 공동자금 보관·다수동의 인출·자동분배 (계주·총무 불필요)"
+},
+};
+
+const ALL = [...IDEAS, ...IDEAS2, ...IDEAS3];
+const WFALL = {...WF, ...WF2};
+const RVALL = {...RIVAL, ...RIVAL2};
+
+function renderFlow(key){
+ const f = FLOWS[key]; if(!f) return '';
+ const steps = f.steps;
+ const n = steps.length;
+ const colW = 200, gap = 34, padX = 16;
+ const boxW = 168, boxH = 52;
+ const laneLblW = 8;
+ const totalW = padX*2 + n*boxW + (n-1)*gap + 40;
+ const yU = 44, yB = 150;        // lane y of node top
+ const laneH = 72;
+ const svgH = 250;
+ const startX = padX + 36;
+ function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+ // wrap text into <=2 lines
+ function wrap(s){
+  s = esc(s);
+  if(s.length<=15) return [s];
+  // split near middle by space
+  let mid = Math.floor(s.length/2);
+  let left = s.lastIndexOf(' ', mid), right = s.indexOf(' ', mid);
+  let cut = (mid-left)<=(right-mid)&&left>0?left:(right>0?right:mid);
+  if(cut<=0||cut>=s.length) return [s];
+  return [s.slice(0,cut), s.slice(cut+1)];
+ }
+ let svg = `<svg class="flowsvg" viewBox="0 0 ${totalW} ${svgH}" xmlns="http://www.w3.org/2000/svg" role="img">`;
+ svg += `<defs><marker id="ah-${key}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#94928a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>`;
+ // lane backgrounds
+ svg += `<rect class="lane-u" x="0" y="${yU-14}" width="${totalW}" height="${laneH}" rx="8" opacity="0.5"/>`;
+ svg += `<rect class="lane-b" x="0" y="${yB-14}" width="${totalW}" height="${laneH}" rx="8" opacity="0.5"/>`;
+ svg += `<text class="lane-lbl" x="6" y="${yU-2}" fill="#077a68">USER · 사용자 단</text>`;
+ svg += `<text class="lane-lbl" x="6" y="${yB-2}" fill="#6b4ea0">BACKEND · 백엔드 단</text>`;
+ // nodes
+ for(let i=0;i<n;i++){
+  const x = startX + i*(boxW+gap);
+  // user node
+  const lu = wrap(steps[i].u);
+  svg += `<rect class="nd-u" x="${x}" y="${yU+6}" width="${boxW}" height="${boxH}" rx="9" stroke-width="1.4"/>`;
+  lu.forEach((ln,li)=>{ svg += `<text class="ntxt" x="${x+boxW/2}" y="${yU+6+boxH/2+(lu.length===1?4:li*14-3)}" text-anchor="middle">${ln}</text>`; });
+  // back node
+  const lb = wrap(steps[i].b);
+  svg += `<rect class="nd-b" x="${x}" y="${yB+6}" width="${boxW}" height="${boxH}" rx="9" stroke-width="1.4"/>`;
+  lb.forEach((ln,li)=>{ svg += `<text class="ntxt" x="${x+boxW/2}" y="${yB+6+boxH/2+(lb.length===1?4:li*14-3)}" text-anchor="middle">${ln}</text>`; });
+  // vertical dashed link user<->backend
+  svg += `<line class="vlink" x1="${x+boxW/2}" y1="${yU+6+boxH}" x2="${x+boxW/2}" y2="${yB+6}"/>`;
+  // horizontal arrows to next
+  if(i<n-1){
+   const nx = startX + (i+1)*(boxW+gap);
+   svg += `<line class="arr" x1="${x+boxW}" y1="${yU+6+boxH/2}" x2="${nx}" y2="${yU+6+boxH/2}" marker-end="url(#ah-${key})"/>`;
+   svg += `<line class="arr" x1="${x+boxW}" y1="${yB+6+boxH/2}" x2="${nx}" y2="${yB+6+boxH/2}" marker-end="url(#ah-${key})"/>`;
+  }
+ }
+ svg += `</svg>`;
+ return `<div class="flowbox">
+  <div class="flowbox-h"><h4>🔄 ${f.title} — 작동 플로우</h4><span class="cov">${f.covers}</span></div>
+  <div class="fdesc">${f.desc}</div>
+  <div class="flow-legend"><span><i class="u"></i> 사용자가 보고 하는 것</span><span><i class="b"></i> 백엔드에서 자동 처리</span><span>┈ 같은 단계의 앞↔뒤 연결</span></div>
+  <div style="overflow-x:auto">${svg}</div>
+  <div class="flow-sc"><span class="ic">⛓ SC</span><span>${f.sc}</span></div>
+ </div>`;
+}
+
+const CLUSTERS = [
+ {key:"yield", num:"01", title:"① 혼자 굴린다", icon:"💰", group:"engine",
+  lead:"넣어둔 돈을 혼자서 자동으로 굴린다. 스마트 세이빙이 은행의 2~3배 수익으로 매일 불려준다. 월렛의 심장이자 모든 자금이 모이는 중앙 엔진. 한국 파킹통장 1.4~1.8% vs 달러 국채 4%+의 격차가 기회.",
+  merge:"#2·#3은 #1 스마트 세이빙에 통합된 단일 엔진."},
+ {key:"social", num:"02", title:"② 함께 굴린다", icon:"🤝", group:"engine",
+  lead:"같은 엔진을 혼자가 아니라 여럿이 굴린다. 계·펀드·동호회 자산을 사람이 아니라 코드가 지키고, 모인 돈은 ①의 엔진이 그대로 운용. 친구 초대가 곧 그로스.",
+  merge:"#4 공동 적금·투자 클럽을 중심으로 #5·#6·#7이 공동금고+멀티시그+①엔진으로 묶임."},
+ {key:"data", num:"03", title:"③ 벌어서 굴린다", icon:"📡", group:"engine",
+  lead:"빅테크가 가져가던 내 데이터·자원으로 내가 번다. 번 돈은 현금으로 빠지지 않고 ①의 엔진으로 자동 적립 → 'Earn & Grow'. 가만히 있어도 벌고, 번 돈은 알아서 굴러간다.",
+  merge:"#9·#10·#11은 #8과 'DePIN/Earn'으로 묶임. 수익은 ①엔진으로 자동 재투입."},
+ {key:"asset", num:"04", title:"④ 투자해서 굴린다", icon:"🧩", group:"engine",
+  lead:"①의 엔진으로 굴리던 돈이 실물·권리 자산 투자로 확장된다. 목돈 있어야 만지던 부동산·음원·웹툰·회원권을 만원 단위 조각으로 소유하고 수익을 배당받는다. 조각투자는 한국에서 법적 경로가 가장 열린 영역.",
+  merge:""},
+];
+
+// render clusters
+const root=document.getElementById('clusters');
+const nav=document.getElementById('navwrap');
+let engineBannerDone=false;
+// 화면(클러스터) 순서대로 새 번호 1~N 부여, 옛 id→새번호 매핑
+const DNO={}; let _c=0;
+CLUSTERS.forEach(cl=>{ ALL.filter(x=>x.cluster===cl.key).sort((a,b)=>a.id-b.id).forEach(it=>{ _c++; DNO[it.id]=_c; }); });
+// 통합 메모/시너지 텍스트의 #옛번호 → #새번호 치환 함수
+function remap(txt){ if(!txt) return txt; return txt.replace(/#(\d+)/g,(m,n)=>{ const k=parseInt(n); return DNO[k]?('#'+DNO[k]):m; }); }
+CLUSTERS.forEach((cl,ci)=>{
+ // 엔진 그룹 첫 클러스터 앞에 우산 배너
+ if(cl.group==='engine' && !engineBannerDone){
+  engineBannerDone=true;
+  const ban=document.createElement('div');
+  ban.className='engine-banner';
+  ban.innerHTML=`<div class="eb-tag">SMART MONEY ENGINE · 핵심 상위 개념</div>
+   <h2 class="eb-title serif">💰 스마트 머니 엔진</h2>
+   <p class="eb-lead">넣어둔 돈을 가만히 두지 않고 알아서 굴려 불리는 단 하나의 엔진. 아래 네 가지는 '어떻게 그 엔진에 돈을 넣고 굴리느냐'의 차이일 뿐, 굴리는 엔진은 같다.</p>
+   <div class="eb-subs"><span>① 혼자 굴린다</span><span class="eb-ar">·</span><span>② 함께 굴린다</span><span class="eb-ar">·</span><span>③ 벌어서 굴린다</span><span class="eb-ar">·</span><span>④ 투자해서 굴린다</span></div>`;
+  root.appendChild(ban);
+ }
+ const ideas=ALL.filter(x=>x.cluster===cl.key).sort((a,b)=>a.id-b.id);
+ const a=document.createElement('a');a.href='#cl-'+cl.key;a.textContent=cl.icon+' '+cl.title;
+ if(cl.group==='engine') a.className='nav-eng';
+ nav.appendChild(a);
+ const sec=document.createElement('section');sec.className='cluster'+(cl.group==='engine'?' in-engine':'');sec.id='cl-'+cl.key;
+ let h=`<div class="cl-head"><span class="cl-num">${cl.num}</span><h2 class="cl-title serif">${cl.icon} ${cl.title}</h2></div><p class="cl-lead">${cl.lead}</p>`;
+ if(cl.merge) h+=`<div class="cl-merge">⚙ 통합 메모 · ${remap(cl.merge)}</div>`;
+ h+=renderFlow(cl.key);
+ ideas.forEach(it=>{
+  h+=`<div class="idea" onclick="this.classList.toggle('open')">
+   <div class="idea-head">
+    <span class="idea-id">${DNO[it.id]}</span>
+    <div class="idea-tt"><h3>${it.name}</h3><div class="ol">${it.oneLine}</div></div>
+    <span class="idea-sc">SCORE ${it.score}</span>
+    <span class="idea-tog">+</span>
+   </div>
+   <div class="idea-body" onclick="event.stopPropagation()">
+    <div class="rowf"><div class="k">무엇인가</div><div class="v">${it.what}</div></div>
+    <div class="rowf"><div class="k">어떻게</div><div class="v">${it.how}</div></div>
+    <div class="rowf"><div class="k">후킹 포인트</div><div class="v"><div class="hooks">${it.hook.map(x=>`<span class="h">"${x}"</span>`).join('')}</div></div></div>
+    <div class="rowf"><div class="k">페인포인트 해결</div><div class="v">${it.pain}</div></div>
+    <div class="rowf sc"><div class="k">스마트컨트랙트</div><div class="v">${it.sc}</div></div>
+    <div class="rowf syn"><div class="k">월렛 통합 시너지</div><div class="v">${remap(it.synergy)}</div></div>
+    <div class="rowf"><div class="k">시장 규모</div><div class="v">${it.market}</div></div>
+    <div class="rowf riv"><div class="k">이미 하는 곳</div><div class="v">${(RVALL[it.id]?RVALL[it.id].rivals:'조사 중')}</div></div>
+    <div class="rowf edge"><div class="k">우리의 강점</div><div class="v">${(RVALL[it.id]?remap(RVALL[it.id].edge):'')}</div></div>
+    <div class="rowf legal"><div class="k kk-legal">법적 방향</div><div class="v">${it.legal}</div></div>
+    <div class="wfwrap"><div class="phone"><div class="screen"><div class="notch"></div><div class="stbar"><span>9:41</span><span>▮▮▮ ●</span></div><div class="scrb">${(WFALL[it.id]||'')}</div></div></div></div>
+    <div class="wfcap">▲ 예시 와이어프레임 (실제 화면 아님)</div>
+   </div>
+  </div>`;
+ });
+ sec.innerHTML=h;root.appendChild(sec);
+});
+
+// synergy cards
+const SM=[
+ {n:"중앙 엔진",h:"스마트 세이빙이 심장",p:"모든 자금이 모이고 흩어지는 중심. 혼자·함께·벌어서·투자해서 들어온 돈이 전부 이 엔진에서 굴러간다."},
+ {n:"① 혼자",h:"쓸수록 쌓인다",p:"자투리·캐시백이 소비 때마다 자동으로 엔진에 적립. 쓰는 행위가 저축을 만드는 역설적 루프."},
+ {n:"② 함께",h:"함께라서 퍼진다",p:"계·공동펀드·공동적금은 친구 초대가 필수 구조. 자금 유입 + 신규 유저 동시 확보(그로스)."},
+ {n:"③ 벌어서",h:"버는 즉시 굴린다",p:"데이터·대역폭·걸음 수익이 현금이 아니라 엔진으로 자동 적립 → 복리. 가만히 있어도 벌고 굴러간다."},
+ {n:"④ 투자해서",h:"굴리다 자산으로",p:"엔진으로 굴리던 돈이 부동산·K콘텐츠·회원권 조각투자로 자연스럽게 확장. 한 앱에서 저축부터 투자까지."},
+ {n:"락인",h:"넣으면 안 빠진다",p:"기능이 늘수록 자금이 엔진 안에서 순환해 빠져나갈 이유가 없어진다. 통합 앱의 핵심 해자."},
+];
+const smap=document.getElementById('smap');
+SM.forEach(s=>{const d=document.createElement('div');d.className='smap-card';
+ d.innerHTML=`<div class="n">${s.n}</div><h4>${s.h}</h4><p>${s.p}</p>`;smap.appendChild(d);});
+
+// recap table
+</script>
+</body>
+</html>
